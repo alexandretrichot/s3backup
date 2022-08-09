@@ -6,21 +6,16 @@ A simple CLI for backing up databases to an S3 bucket.
 
 ## 🚀 Usage
 
+### Backup MongoDB Database
+
+To backup a MongoDB database with **docker**, use:
+
 ```shell
-$ s3backup mongo backup -h
-MongoDB Backup
-
-Usage:
-  s3backup mongo backup [flags]
-
-Flags:
-  -h, --help   help for backup
-
-Global Flags:
-  -u, --mongoUri string        The Database URI string (env: MONGO_URI)
-      --s3AccessKeyId string   The s3 access key id (env: S3_ACCESS_KEY_ID)
-      --s3Bucket string        The name of the bucket (env: S3_BUCKET)
-      --s3Endpoint string      The s3 endpoint URL (env: S3_ENDPOINT)
-      --s3Region string        The region to use for the backup (env: S3_REGION)
-      --s3SecretKey string     The s3 secret key (env: S3_SECRET_KEY)
+$ docker run -it --rm ghcr.io/alexandretrichot/s3backup:latest \
+mongo backup -n "my-super-backup" \
+--s3Region "<YOUR_REGION>" \
+--s3AccessKeyId "<YOUR_ACCESS_KEY_ID>" \
+--s3SecretKey "<YOUR_SECRET_KEY>" \
+--s3Bucket "<YOUR_BUCKET>" \
+--mongoUri "<YOUR_MONGO_URI>"
 ```
