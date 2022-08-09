@@ -55,8 +55,6 @@ jobs:
           tags: |
             ghcr.io/${{ github.actor }}/s3backup:${{ github.ref_name }}
             ghcr.io/${{ github.actor }}/s3backup:latest
-          cache-from: type=registry,ref=ghcr.io/${{ github.actor }}/s3backup:buildcache
-          cache-to: type=registry,ref=ghcr.io/${{ github.actor }}/s3backup,mode=max
 
   release:
     needs: docker
