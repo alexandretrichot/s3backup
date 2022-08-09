@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: manual-backup
+spec:
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      containers:
+        - name: backup
+          image: ghcr.io/alexandretrichot/s3backup:latest
+          args:
+            - 'mongo'
+            - 'backup'
+            - '-n'
+            - 'myapp-manual-backup'
+          env:
+            - name: MONGO_URI
+              value: '<YOUR_MONGO_URI>'
+            - name: S3_REGION
+              value: '<YOUR_REGION>'
+            - name: S3_ACCESS_KEY_ID
+              value: '<YOUR_ACCESS_KEY_ID>'
+            - name: S3_SECRET_KEY
+              value: '<YOUR_SECRET_KEY>'
+            - name: S3_BUCKET
+              value: '<YOUR_BUCKET>'
+      restartPolicy: Never

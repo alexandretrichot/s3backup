@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: auto-backup
+spec:
+  schedule: '0 2 * * *'
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 300
+      template:
+        spec:
+          containers:
+            - name: backup
+              image: ghcr.io/alexandretrichot/s3backup:latest
+              args:
+                - 'mongo'
+                - 'backup'
+                - '-n'
+                - 'myapp-auto-backup'
+              env:
+                - name: MONGO_URI
+                  value: '<YOUR_MONGO_URI>'
+                - name: S3_REGION
+                  value: '<YOUR_REGION>'
+                - name: S3_ACCESS_KEY_ID
+                  value: '<YOUR_ACCESS_KEY_ID>'
+                - name: S3_SECRET_KEY
+                  value: '<YOUR_SECRET_KEY>'
+                - name: S3_BUCKET
+                  value: '<YOUR_BUCKET>'
+          restartPolicy: OnFailure
