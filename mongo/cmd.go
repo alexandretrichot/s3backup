@@ -17,15 +17,11 @@ func BuildRootCmd(cfg config.Config) *cobra.Command {
 	var backupCmd = &cobra.Command{
 		Use:   "backup",
 		Short: "MongoDB Backup",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := config.ValidateS3Flags(cmd); err != nil {
-				return err
-			}
-			if err := ValidateMongoFlags(cmd); err != nil {
-				return err
-			}
+		Run: func(cmd *cobra.Command, args []string) {
+			config.ValidateS3Flags(cmd)
+			validateMongoFlags(cmd)
 
-			return backup(cmd)
+			backup(cmd)
 		},
 	}
 

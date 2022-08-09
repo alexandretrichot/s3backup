@@ -1,10 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"os"
-
+	"github.com/alexandretrichot/s3backup/common"
 	"github.com/alexandretrichot/s3backup/config"
 	"github.com/alexandretrichot/s3backup/mongo"
 	"github.com/caarlos0/env/v6"
@@ -16,7 +13,7 @@ var version = "development"
 func main() {
 	cfg := config.Config{}
 	if err := env.Parse(&cfg); err != nil {
-		log.Fatal(err)
+		common.AppErrLog.Fatal(err)
 	}
 
 	rootCmd := &cobra.Command{
@@ -24,6 +21,7 @@ func main() {
 		Short:   "Back up your database data to a safe place in an S3 bucket. 🪣",
 		Version: version,
 	}
+	rootCmd.PersistentFlags().StringP("name", "n", cfg.BackupName, "The prefix name of the backup (env: BACKUP_NAME)")
 	rootCmd.PersistentFlags().String("s3Endpoint", cfg.S3Endpoint, "The s3 endpoint URL (env: S3_ENDPOINT)")
 	rootCmd.PersistentFlags().String("s3Region", cfg.S3Region, "The region to use for the backup (env: S3_REGION)")
 	rootCmd.PersistentFlags().String("s3AccessKeyId", cfg.S3AccessKeyId, "The s3 access key id (env: S3_ACCESS_KEY_ID)")
@@ -33,7 +31,6 @@ func main() {
 	rootCmd.AddCommand(mongo.BuildRootCmd(cfg))
 
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		common.AppErrLog.Fatal(err)
 	}
 }

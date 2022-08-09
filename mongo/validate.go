@@ -1,15 +1,14 @@
 package mongo
 
 import (
-	"fmt"
+	"errors"
+	"log"
 
 	"github.com/spf13/cobra"
 )
 
-func ValidateMongoFlags(cmd *cobra.Command) error {
+func validateMongoFlags(cmd *cobra.Command) {
 	if cmd.Flag("mongoUri").Value.String() == "" {
-		return fmt.Errorf("required '--mongoUri' flag or 'MONGO_URI' env var")
+		log.Fatal(errors.New("required '--mongoUri' flag or 'MONGO_URI' env var"))
 	}
-
-	return nil
 }

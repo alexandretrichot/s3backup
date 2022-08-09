@@ -1,15 +1,13 @@
 package common
 
 import (
-	"fmt"
-
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/spf13/cobra"
 )
 
-func GetS3Session(cmd *cobra.Command) (*session.Session, error) {
+func GetS3Session(cmd *cobra.Command) *session.Session {
 	s3Endpoint, _ := cmd.Flags().GetString("s3Endpoint")
 	s3Region, _ := cmd.Flags().GetString("s3Region")
 	s3AccessKeyId, _ := cmd.Flags().GetString("s3AccessKeyId")
@@ -21,8 +19,8 @@ func GetS3Session(cmd *cobra.Command) (*session.Session, error) {
 		Credentials: credentials.NewStaticCredentials(s3AccessKeyId, s3SecretKey, ""),
 	})
 	if err != nil {
-		return session, fmt.Errorf("GetSession: %w", err)
+		AppErrLog.Fatal("s3 Auth Failed: %w", err)
 	}
 
-	return session, nil
+	return session
 }

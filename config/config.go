@@ -1,6 +1,7 @@
 package config
 
 type Config struct {
+	BackupName    string `env:"BACKUP_NAME"`
 	MongoURI      string `env:"MONGO_URI"`
 	S3Endpoint    string `env:"S3_ENDPOINT"`
 	S3AccessKeyId string `env:"S3_ACCESS_KEY_ID"`
