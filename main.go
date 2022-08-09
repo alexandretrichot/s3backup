@@ -11,6 +11,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var version = "development"
+
 func main() {
 	cfg := config.Config{}
 	if err := env.Parse(&cfg); err != nil {
@@ -18,8 +20,9 @@ func main() {
 	}
 
 	rootCmd := &cobra.Command{
-		Use:   "s3backup",
-		Short: "Back up your database data to a safe place in an S3 bucket. 🪣",
+		Use:     "s3backup",
+		Short:   "Back up your database data to a safe place in an S3 bucket. 🪣",
+		Version: version,
 	}
 	rootCmd.PersistentFlags().String("s3Endpoint", cfg.S3Endpoint, "The s3 endpoint URL (env: S3_ENDPOINT)")
 	rootCmd.PersistentFlags().String("s3Region", cfg.S3Region, "The region to use for the backup (env: S3_REGION)")
