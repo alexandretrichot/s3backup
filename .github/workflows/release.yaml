@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - '*'
+      - 'v'
 
 jobs:
   build:
@@ -62,6 +62,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: bin
+          path: bin
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
