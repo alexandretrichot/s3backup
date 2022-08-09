@@ -28,7 +28,7 @@ func backup(cmd *cobra.Command) {
 
 	startTime := time.Now()
 
-	backupName := fmt.Sprintf("%v_%v.bson", name, startTime.UTC().Format("2006-01-02T15:04:05"))
+	backupName := fmt.Sprintf("%v_%v.bson", name, startTime.UTC().Format("2006-01-02T15-04-05"))
 
 	common.AppLog.Println("Starting MongoDB Backup")
 	common.AppLog.Println("")
