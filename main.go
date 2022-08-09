@@ -7,7 +7,7 @@ import (
 
 	"github.com/alexandretrichot/s3backup/config"
 	"github.com/alexandretrichot/s3backup/mongo"
-	"github.com/caarlos0/env"
+	"github.com/caarlos0/env/v6"
 	"github.com/spf13/cobra"
 )
 
